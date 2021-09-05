@@ -1,11 +1,14 @@
 package com.implancec.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.implancec.controller.exception.ServicioNotFoundException;
 import com.implancec.dao.ServicioRepository;
 import com.implancec.dto.Servicio;
+import com.implancec.service.ServicioService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,14 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ServicioController {
     private final ServicioRepository repository;
+    private final ServicioService service;
 
-    ServicioController(ServicioRepository repository) {
+    @Autowired
+    ServicioController(ServicioRepository repository, ServicioService service) {
         this.repository = repository;
+        this.service = service;
     }
 
     @GetMapping("/servicios")
-    List<Servicio> all() {
-        return repository.findAll();
+    List<Servicio> all(Optional<Long> id,
+                       Optional<Integer> codMaterial,
+                       Optional<Long> idRecolector,
+                       Optional<Long> idSolicitud) {
+        return service.getServicioList(id, codMaterial, idRecolector, idSolicitud);
     }
 
     @PostMapping("/servicios")

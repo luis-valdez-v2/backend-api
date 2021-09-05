@@ -1,11 +1,14 @@
 package com.implancec.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.implancec.controller.exception.AfiliadoNotFoundException;
 import com.implancec.dao.AfiliadoRepository;
 import com.implancec.dto.Afiliado;
+import com.implancec.service.AfiliadoService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,14 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 class AfiliadoController {
 
     private final AfiliadoRepository repository;
+    private final AfiliadoService service;
 
-    AfiliadoController(AfiliadoRepository repository) {
+    @Autowired
+    AfiliadoController(AfiliadoRepository repository, AfiliadoService service) {
         this.repository = repository;
+        this.service = service;
     }
 
     @GetMapping("/afiliados")
-    List<Afiliado> all() {
-        return repository.findAll();
+    List<Afiliado> all(Optional<String> nombre,
+                       Optional<Long> id,
+                       Optional<Integer> tipo) {
+        return service.getAfiliadoList(nombre, id, tipo);
     }
 
     @PostMapping("/afiliados")
