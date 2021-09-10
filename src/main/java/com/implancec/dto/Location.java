@@ -1,10 +1,9 @@
 package com.implancec.dto;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,10 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Ubicacion {
+public class Location {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 
-    private Date fecha;
+    private OffsetDateTime date;
 
     private double geo_lat;
 
@@ -25,12 +24,12 @@ public class Ubicacion {
     @JoinColumn(name = "id_afiliado")
     private Afiliado afiliado;
 
-    public Ubicacion() {
+    public Location() {
     }
 
-    public Ubicacion(Long id, Date fecha, double geo_lat, double geo_lng, Afiliado afiliado) {
+    public Location(Long id, OffsetDateTime date, double geo_lat, double geo_lng, Afiliado afiliado) {
         this.id = id;
-        this.fecha = fecha;
+        this.date = date;
         this.geo_lat = geo_lat;
         this.geo_lng = geo_lng;
         this.afiliado = afiliado;
@@ -44,12 +43,12 @@ public class Ubicacion {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public OffsetDateTime getDate() {
+        return date;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setDate(OffsetDateTime fecha) {
+        this.date = fecha;
     }
 
     public double getGeo_lat() {
@@ -80,12 +79,12 @@ public class Ubicacion {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Ubicacion ubicacion = (Ubicacion) o;
-        return Double.compare(ubicacion.geo_lat, geo_lat) == 0 && Double.compare(ubicacion.geo_lng, geo_lng) == 0 && Objects.equals(id, ubicacion.id) && Objects.equals(fecha, ubicacion.fecha) && Objects.equals(afiliado, ubicacion.afiliado);
+        Location location = (Location) o;
+        return Double.compare(location.geo_lat, geo_lat) == 0 && Double.compare(location.geo_lng, geo_lng) == 0 && Objects.equals(id, location.id) && Objects.equals(date, location.date) && Objects.equals(afiliado, location.afiliado);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fecha, geo_lat, geo_lng, afiliado);
+        return Objects.hash(id, date, geo_lat, geo_lng, afiliado);
     }
 }

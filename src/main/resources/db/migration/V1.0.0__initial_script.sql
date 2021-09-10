@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS afiliado
 (
     id SERIAL PRIMARY KEY,
-    nombre text COLLATE pg_catalog."default" NOT NULL,
-    dob date,
-    calle text COLLATE pg_catalog."default",
+    name text COLLATE pg_catalog."default",
+    dob TIMESTAMP WITH TIME ZONE,
+    street text COLLATE pg_catalog."default",
     extnum smallint,
     intnum smallint,
     colonia text COLLATE pg_catalog."default",
@@ -15,10 +15,10 @@ CREATE TABLE IF NOT EXISTS afiliado
     phone text COLLATE pg_catalog."default"
 );
 
-CREATE TABLE IF NOT EXISTS ubicacion
+CREATE TABLE IF NOT EXISTS location
 (
     id SERIAL PRIMARY KEY,
-    fecha date,
+    date TIMESTAMP WITH TIME ZONE,
     geo_lat double precision,
     geo_lng double precision,
     id_afiliado integer,
@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS ubicacion
 
 CREATE TABLE IF NOT EXISTS solicitud
 (
-    id SERIAL PRIMARY KEY,
-    fecha_rec date,
-    fecha_serv date,
+    folio SERIAL PRIMARY KEY,
+    fecha_rec TIMESTAMP WITH TIME ZONE,
+    fecha_serv TIMESTAMP WITH TIME ZONE,
     hora time with time zone,
     estado smallint,
     id_afiliado integer NOT NULL,
@@ -45,20 +45,20 @@ CREATE TABLE IF NOT EXISTS solicitud
 CREATE TABLE IF NOT EXISTS servicio
 (
     id SERIAL PRIMARY KEY,
-    fecha date,
-    observacion text COLLATE pg_catalog."default",
+    fecha TIMESTAMP WITH TIME ZONE,
+    observaciones text COLLATE pg_catalog."default",
     cod_material smallint,
     cantidad integer,
     puntos_afiliado integer,
     puntos_recolector integer,
     id_recolector integer NOT NULL,
-    solicitud_id integer NOT NULL,
+    solicitud_folio integer NOT NULL,
     CONSTRAINT recolector_fk FOREIGN KEY (id_recolector)
         REFERENCES afiliado (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT solicitud_fk FOREIGN KEY (solicitud_id)
-        REFERENCES solicitud (id) MATCH SIMPLE
+    CONSTRAINT solicitud_fk FOREIGN KEY (solicitud_folio)
+        REFERENCES solicitud (folio) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );

@@ -1,6 +1,6 @@
 package com.implancec.dto;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -13,11 +13,11 @@ public class Afiliado {
 
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 
-    private String nombre;
+    private String name;
 
-    private Date dob;
+    private OffsetDateTime dob;
 
-    private String calle;
+    private String street;
 
     private int extnum;
 
@@ -35,7 +35,7 @@ public class Afiliado {
 
     private String email;
 
-    private int phone;
+    private String phone;
 
     public Afiliado() {
 
@@ -49,28 +49,28 @@ public class Afiliado {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String nombre) {
+        this.name = nombre;
     }
 
-    public Date getDob() {
+    public OffsetDateTime getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(OffsetDateTime dob) {
         this.dob = dob;
     }
 
-    public String getCalle() {
-        return calle;
+    public String getStreet() {
+        return street;
     }
 
-    public void setCalle(String calle) {
-        this.calle = calle;
+    public void setStreet(String calle) {
+        this.street = calle;
     }
 
     public int getExtnum() {
@@ -137,19 +137,19 @@ public class Afiliado {
         this.email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public Afiliado(String nombre, Date dob, String calle, int extnum, int intnum, String colonia, int codPost, double geoLat, double geoLng, int tipo, String email, int phone) {
+    public Afiliado(String name, OffsetDateTime dob, String street, int extnum, int intnum, String colonia, int codPost, double geoLat, double geoLng, int tipo, String email, String phone) {
 
-        this.nombre = nombre;
+        this.name = name;
         this.dob = dob;
-        this.calle = calle;
+        this.street = street;
         this.extnum = extnum;
         this.intnum = intnum;
         this.colonia = colonia;
@@ -166,11 +166,11 @@ public class Afiliado {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Afiliado afiliado = (Afiliado) o;
-        return extnum == afiliado.extnum && intnum == afiliado.intnum && codPost == afiliado.codPost && Double.compare(afiliado.geoLat, geoLat) == 0 && Double.compare(afiliado.geoLng, geoLng) == 0 && tipo == afiliado.tipo && phone == afiliado.phone && Objects.equals(id, afiliado.id) && Objects.equals(nombre, afiliado.nombre) && Objects.equals(dob, afiliado.dob) && Objects.equals(calle, afiliado.calle) && Objects.equals(colonia, afiliado.colonia) && Objects.equals(email, afiliado.email);
+        return extnum == afiliado.extnum && intnum == afiliado.intnum && codPost == afiliado.codPost && Double.compare(afiliado.geoLat, geoLat) == 0 && Double.compare(afiliado.geoLng, geoLng) == 0 && tipo == afiliado.tipo && phone == afiliado.phone && Objects.equals(id, afiliado.id) && Objects.equals(name, afiliado.name) && Objects.equals(dob, afiliado.dob) && Objects.equals(street, afiliado.street) && Objects.equals(colonia, afiliado.colonia) && Objects.equals(email, afiliado.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, dob, calle, extnum, intnum, colonia, codPost, geoLat, geoLng, tipo, email, phone);
+        return Objects.hash(id, name, dob, street, extnum, intnum, colonia, codPost, geoLat, geoLng, tipo, email, phone);
     }
 }

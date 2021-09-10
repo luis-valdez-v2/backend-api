@@ -1,10 +1,7 @@
 package com.implancec.utils;
 
-import java.sql.Time;
-import java.util.Date;
-
 import com.implancec.dao.AfiliadoRepository;
-import com.implancec.dto.Solicitud;
+import com.implancec.dao.SolicitudRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,13 +10,25 @@ import org.springframework.stereotype.Component;
 public class SolicitudUtils {
 
     private final AfiliadoRepository afiliadoRepository;
+    private final SolicitudRepository solicitudRepository;
 
     @Autowired
-    SolicitudUtils(AfiliadoRepository afiliadoRepository) {
+    public SolicitudUtils(AfiliadoRepository afiliadoRepository, SolicitudRepository solicitudRepository) {
         this.afiliadoRepository = afiliadoRepository;
+        this.solicitudRepository = solicitudRepository;
     }
 
-    public Solicitud createDummySolicitud() {
-        return new Solicitud(new Date(), new Date(), new Time(1L), 1, afiliadoRepository.getById(1L));
-    }
+//    public Servicio createServicio() {
+//
+////           Optional<Afiliado> afiliado = afiliadoRepository.findById(1L);
+////        Optional<Solicitud> solicitud = solicitudRepository.findById(1L);
+////
+////        System.out.println("wwoewd");
+////        return new Servicio(new ServicioId(
+////                solicitud.orElse(null),
+////                afiliado.orElse(null)),
+////                OffsetDateTime.now(), "", 1, 1, 1, 1
+////                );
+////    }
 }
+

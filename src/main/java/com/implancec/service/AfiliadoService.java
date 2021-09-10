@@ -1,6 +1,7 @@
 package com.implancec.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,13 +28,13 @@ public class AfiliadoService {
 
         if(id.isPresent()) {
             afiliadoList = afiliadoList.stream()
-                    .filter(afiliado -> afiliado.getId().equals(id.get()))
+                    .filter(afiliado -> Objects.equals(afiliado.getId(), id.get()))
                     .collect(Collectors.toList());
         }
 
         if(nombre.isPresent()) {
             afiliadoList = afiliadoList.stream()
-                    .filter(afiliado -> afiliado.getNombre().equals(nombre.get()))
+                    .filter(afiliado -> Objects.equals(afiliado.getName(), nombre.get()))
                     .collect(Collectors.toList());
         }
 

@@ -1,6 +1,7 @@
 package com.implancec.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -20,15 +21,15 @@ public class ServicioService {
         this.repository = repository;
     }
 
-    public List<Servicio> getServicioList(Optional<Long> id,
+    public List<Servicio> getServicioList(Optional<Long> folio,
                                           Optional<Integer> codMaterial,
                                           Optional<Long> idRecolector,
                                           Optional<Long> idSolicitud) {
         List<Servicio> servicioList = repository.getAll();
 
-        if(id.isPresent()) {
+        if(folio.isPresent()) {
             servicioList = servicioList.stream()
-                    .filter(servicio -> servicio.getId().equals(id.get()))
+                    .filter(servicio -> Objects.equals(servicio.getSolicitud().getFolio(), folio.get()))
                     .collect(Collectors.toList());
         }
 
@@ -40,13 +41,13 @@ public class ServicioService {
 
         if(idRecolector.isPresent()) {
             servicioList = servicioList.stream()
-                    .filter(servicio -> servicio.getRecolector().getId().equals(idRecolector.get()))
+                    .filter(servicio -> Objects.equals(servicio.getRecolector().getId(), idRecolector.get()))
                     .collect(Collectors.toList());
         }
 
         if(idSolicitud.isPresent()) {
             servicioList = servicioList.stream()
-                    .filter(servicio -> servicio.getSolicitud().getId().equals(idSolicitud.get()))
+                    .filter(servicio -> servicio.getSolicitud().getFolio().equals(idSolicitud.get()))
                     .collect(Collectors.toList());
         }
         return servicioList;

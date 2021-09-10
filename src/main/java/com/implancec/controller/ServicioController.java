@@ -49,26 +49,26 @@ public class ServicioController {
                 .orElseThrow(() -> new ServicioNotFoundException(id));
     }
 
-    @PutMapping("/servicios/{id}")
-    Servicio replaceServicio(@RequestBody Servicio newServicio, @PathVariable Long id) {
-
-        return repository.findById(id)
-                .map(servicio -> {
-                    servicio.setRecolector(newServicio.getRecolector());
-                    servicio.setCantidad(newServicio.getCantidad());
-                    servicio.setFecha(newServicio.getFecha());
-                    servicio.setCodMaterial(newServicio.getCodMaterial());
-                    servicio.setObservacion(newServicio.getObservacion());
-                    servicio.setPuntosAfiliado(newServicio.getPuntosAfiliado());
-                    servicio.setPuntosRecolector(newServicio.getPuntosRecolector());
-                    servicio.setSolicitud(newServicio.getSolicitud());
-                    return repository.save(servicio);
-                })
-                .orElseGet(() -> {
-                    newServicio.setId(id);
-                    return repository.save(newServicio);
-                });
-    }
+//    @PutMapping("/servicios/{id}")
+//    Servicio replaceServicio(@RequestBody Servicio newServicio, @PathVariable Long id) {
+//
+//        return repository.findById(id)
+//                .map(servicio -> {
+//                    servicio.setRecolector(newServicio.getRecolector());
+//                    servicio.setCantidad(newServicio.getCantidad());
+//                    servicio.setFecha(newServicio.getFecha());
+//                    servicio.setCodMaterial(newServicio.getCodMaterial());
+//                    servicio.setObservacion(newServicio.getObservacion());
+//                    servicio.setPuntosAfiliado(newServicio.getPuntosAfiliado());
+//                    servicio.setPuntosRecolector(newServicio.getPuntosRecolector());
+//                    servicio.setSolicitud(newServicio.getSolicitud());
+//                    return repository.save(servicio);
+//                })
+//                .orElseGet(() -> {
+//                    newServicio.setId(id);
+//                    return repository.save(newServicio);
+//                });
+//    }
 
     @DeleteMapping("/servicios/{id}")
     void deleteServicio(@PathVariable Long id) {

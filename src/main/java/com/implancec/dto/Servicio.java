@@ -1,8 +1,9 @@
 package com.implancec.dto;
 
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,14 +12,21 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Servicio {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private Date fecha;
+    private @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 
-    private String observacion;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "solicitud_folio")
+    private Solicitud solicitud;
 
-    private int codMaterial;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_recolector")
+    private Afiliado recolector;
+
+    private OffsetDateTime fecha;
+
+    private String observaciones;
 
     private int cantidad;
 
@@ -26,52 +34,38 @@ public class Servicio {
 
     private int puntosRecolector;
 
-    @ManyToOne
-    @JoinColumn(name = "solicitud_id")
-    private Solicitud solicitud;
-
-    @ManyToOne
-    @JoinColumn(name = "id_recolector")
-    private Afiliado recolector;
+    private int codMaterial;
 
     public Servicio() {
 
     }
 
-    public Servicio(Long id, Date fecha, String observacion, int cod_material, int cantidad, int puntos_afiliado, int puntos_recolector, Solicitud solicitud, Afiliado recolector) {
+    public Servicio(Long id, Solicitud solicitud, Afiliado recolector, OffsetDateTime fecha, String observaciones, int cantidad, int puntosAfiliado, int puntosRecolector, int codMaterial) {
         this.id = id;
-        this.fecha = fecha;
-        this.observacion = observacion;
-        this.codMaterial = cod_material;
-        this.cantidad = cantidad;
-        this.puntosAfiliado = puntos_afiliado;
-        this.puntosRecolector = puntos_recolector;
         this.solicitud = solicitud;
         this.recolector = recolector;
+        this.fecha = fecha;
+        this.observaciones = observaciones;
+        this.cantidad = cantidad;
+        this.puntosAfiliado = puntosAfiliado;
+        this.puntosRecolector = puntosRecolector;
+        this.codMaterial = codMaterial;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getFecha() {
+    public OffsetDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(OffsetDateTime fecha) {
         this.fecha = fecha;
     }
 
-    public String getObservacion() {
-        return observacion;
+    public String getObservaciones() {
+        return observaciones;
     }
 
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
+    public void setObservaciones(String observacion) {
+        this.observaciones = observacion;
     }
 
     public int getCodMaterial() {
@@ -104,6 +98,14 @@ public class Servicio {
 
     public void setPuntosRecolector(int puntos_recolector) {
         this.puntosRecolector = puntos_recolector;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Solicitud getSolicitud() {

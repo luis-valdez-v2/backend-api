@@ -1,10 +1,8 @@
 package com.implancec.dto;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,13 +11,12 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Solicitud {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long folio;
 
-    private Date fechaRec;
+    private OffsetDateTime fechaRec;
 
-    private Date fechaServ;
-
-    private Time hora;
+    private OffsetDateTime fechaServ;
 
     private int estado;
 
@@ -28,47 +25,37 @@ public class Solicitud {
     private Afiliado afiliado;
 
     public Solicitud() {
-
     }
 
-    public Solicitud(Date fechaRec, Date fechaServ, Time hora, int estado,Afiliado afiliado) {
+    public Solicitud(OffsetDateTime fechaRec, OffsetDateTime fechaServ, int estado, Afiliado afiliado) {
         this.fechaRec = fechaRec;
         this.fechaServ = fechaServ;
-        this.hora = hora;
         this.estado = estado;
         this.afiliado = afiliado;
     }
 
-    public Long getId() {
-        return id;
+    public Long getFolio() {
+        return folio;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setFolio(Long folio) {
+        this.folio = folio;
     }
 
-    public Date getFechaRec() {
+    public OffsetDateTime getFechaRec() {
         return fechaRec;
     }
 
-    public void setFechaRec(Date fechaRec) {
+    public void setFechaRec(OffsetDateTime fechaRec) {
         this.fechaRec = fechaRec;
     }
 
-    public Date getFechaServ() {
+    public OffsetDateTime getFechaServ() {
         return fechaServ;
     }
 
-    public void setFechaServ(Date fechaServ) {
+    public void setFechaServ(OffsetDateTime fechaServ) {
         this.fechaServ = fechaServ;
-    }
-
-    public Time getHora() {
-        return hora;
-    }
-
-    public void setHora(Time hora) {
-        this.hora = hora;
     }
 
     public Afiliado getAfiliado() {

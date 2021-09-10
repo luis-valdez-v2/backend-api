@@ -54,7 +54,7 @@ class AfiliadoController {
 
         return repository.findById(id)
                 .map(afiliado -> {
-                    afiliado.setCalle(newAfiliado.getCalle());
+                    afiliado.setStreet(newAfiliado.getStreet());
                     afiliado.setCodPost(newAfiliado.getCodPost());
                     afiliado.setDob(newAfiliado.getDob());
                     afiliado.setColonia(newAfiliado.getColonia());
@@ -63,7 +63,7 @@ class AfiliadoController {
                     afiliado.setIntnum(newAfiliado.getIntnum());
                     afiliado.setGeoLat(newAfiliado.getGeoLat());
                     afiliado.setGeoLng(newAfiliado.getGeoLng());
-                    afiliado.setNombre(newAfiliado.getNombre());
+                    afiliado.setName(newAfiliado.getName());
                     afiliado.setTipo(newAfiliado.getTipo());
                     return repository.save(afiliado);
                 })

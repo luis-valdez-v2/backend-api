@@ -7,7 +7,7 @@ import com.implancec.dto.Afiliado;
 public interface AfiliadoUtils {
     static Afiliado createAfiliado() {
         return new Afiliado("nombre",
-                new Date(),
+                null,
                 "calle",
                 1,
                 1,
@@ -17,6 +17,6 @@ public interface AfiliadoUtils {
                 1.1,
                 1,
                 "email",
-                12345);
+                "12345");
     }
 }

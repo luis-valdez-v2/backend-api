@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.implancec.controller.exception.UbicacionNotFoundException;
 import com.implancec.dao.UbicacionRepository;
-import com.implancec.dto.Ubicacion;
+import com.implancec.dto.Location;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,18 +23,18 @@ class UbicacionController {
     }
 
     @GetMapping("/ubicaciones")
-    List<Ubicacion> all() {
+    List<Location> all() {
         return repository.findAll();
     }
 
     @PostMapping("/ubicaciones")
-    Ubicacion newUbicacion(@RequestBody Ubicacion newUbicacion) {
-        return repository.save(newUbicacion);
+    Location newUbicacion(@RequestBody Location newLocation) {
+        return repository.save(newLocation);
     }
 
     // Single item
     @GetMapping("/ubicaciones/{id}")
-    Ubicacion one(@PathVariable Long id) {
+    Location one(@PathVariable Long id) {
 
         return repository.findById(id)
                 .orElseThrow(() -> new UbicacionNotFoundException(id));

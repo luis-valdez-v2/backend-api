@@ -1,6 +1,7 @@
 package com.implancec.service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class SolicitudService {
 
         if(id.isPresent()) {
             solicitudList = solicitudList.stream()
-                    .filter(solicitud -> solicitud.getId().equals(id.get()))
+                    .filter(solicitud -> Objects.equals(solicitud.getFolio(), id.get()))
                     .collect(Collectors.toList());
         }
 
@@ -37,7 +38,7 @@ public class SolicitudService {
 
         if(idAfiliado.isPresent()) {
             solicitudList = solicitudList.stream()
-                    .filter(solicitud -> solicitud.getAfiliado().getId().equals(idAfiliado.get()))
+                    .filter(solicitud -> Objects.equals(solicitud.getAfiliado().getId(), idAfiliado.get()))
                     .collect(Collectors.toList());
         }
         return solicitudList;

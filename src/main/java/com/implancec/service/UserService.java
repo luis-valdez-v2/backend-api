@@ -1,7 +1,12 @@
 package com.implancec.service;
 
+import static com.implancec.utils.Constants.RESULT;
+import static com.implancec.utils.Constants.TOKEN;
+
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.implancec.dao.UserRepository;
 import com.implancec.dto.User;
 import com.implancec.exception.CustomException;
@@ -34,12 +39,18 @@ public class UserService {
     public String signin(String username, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            return jwtTokenProvider.createToken(
+            String token = jwtTokenProvider.createToken(
                     username,
                     UserUtils.extractRoles(userRepository.findByUsername(username).getRoles())
             );
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add(RESULT, new JsonPrimitive("200"));
+            jsonObject.add(TOKEN, new JsonPrimitive(token));
+            return jsonObject.toString();
         } catch (AuthenticationException e) {
-            throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add(RESULT, new JsonPrimitive("401"));
+            return jsonObject.toString();
         }
     }
 
@@ -47,11 +58,17 @@ public class UserService {
         if (!userRepository.existsByUsername(user.getUsername())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
-            return jwtTokenProvider.createToken(
+            String token = jwtTokenProvider.createToken(
                     user.getUsername(), UserUtils.extractRoles((user.getRoles()))
             );
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add(RESULT, new JsonPrimitive("200"));
+            jsonObject.add(TOKEN, new JsonPrimitive(token));
+            return  jsonObject.toString();
         } else {
-            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add(RESULT, new JsonPrimitive("409"));
+            return jsonObject.toString();
         }
     }
 

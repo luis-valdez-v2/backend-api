@@ -32,10 +32,10 @@ public class DatabaseConfiguration {
                                    ServicioRepository servicioRepository) {
 
         return args -> {
-//            afiliadoRepository.save(AfiliadoUtils.createAfiliado());
-//            log.info("Preloading " + solicitudRepository.save(solicitudUtils.createDummySolicitud()));
-//            log.info("Preloading " + solicitudRepository.save(solicitudUtils.createDummySolicitud()));
-            //servicioRepository.save(new Servicio());
+//            SolicitudUtils solicitudUtils = new SolicitudUtils(afiliadoRepository, solicitudRepository);
+//            Servicio servicio = solicitudUtils.createServicio();
+//            System.out.println(servicio);
+//            servicioRepository.save(servicio);
         };
     }
 }
