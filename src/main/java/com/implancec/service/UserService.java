@@ -1,10 +1,14 @@
 package com.implancec.service;
 
 import static com.implancec.utils.Constants.RESULT;
+import static com.implancec.utils.Constants.ROLES;
 import static com.implancec.utils.Constants.TOKEN;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.implancec.dao.UserRepository;
@@ -39,19 +43,38 @@ public class UserService {
     public String signin(String username, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+
+            User user = userRepository.findByUsername(username);
+
+            List<String> roles = UserUtils.extractRoles(user.getRoles());
             String token = jwtTokenProvider.createToken(
                     username,
-                    UserUtils.extractRoles(userRepository.findByUsername(username).getRoles())
+                    roles
             );
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.add(RESULT, new JsonPrimitive("200"));
-            jsonObject.add(TOKEN, new JsonPrimitive(token));
-            return jsonObject.toString();
+
+            return getSigninPayload(user, roles, token).toString();
         } catch (AuthenticationException e) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.add(RESULT, new JsonPrimitive("401"));
             return jsonObject.toString();
         }
+    }
+
+    private JsonObject getSigninPayload(User user, List<String> roles, String token) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add(RESULT, new JsonPrimitive("200"));
+        jsonObject.add(TOKEN, new JsonPrimitive(token));
+        Long userId = user.getAfiliado().getId();
+        jsonObject.add("afiliadoId", new JsonPrimitive(userId));
+        JsonArray rolesAsJsonArray = getRolesAsJsonArray(roles);
+        jsonObject.add(ROLES, rolesAsJsonArray);
+        return jsonObject;
+    }
+
+    private JsonArray getRolesAsJsonArray(List<String> roles) {
+        JsonArray jsonElements = new JsonArray();
+        roles.forEach(jsonElements::add);
+        return jsonElements;
     }
 
     public String signup(User user) {
